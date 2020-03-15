@@ -45,16 +45,21 @@ public class FXMLController {
     	
     	for(char c : verificaParola) {
     		if(Character.isDigit(c)) {
-    			txtResult.setText("Inserire solo caratteri alfabetici");
+//    			txtResult.setText("Inserire solo caratteri alfabetici");
+    			txtResult.appendText("ERRORE: inserire solo caratteri alfabetici \n");
     			return;
-    		}		
+    		} else {
+    			// Converto per questioni di uniformità, tutte le parole in modo che abbiano la prima lettera Maiuscola e
+    			// il resto del testo in minuscolo!
+//    			parolaNuova = parolaNuova.toLowerCase();
+    			parolaNuova = parolaNuova.substring(0, 1).toUpperCase() + parolaNuova.substring(1).toLowerCase();
+    		}
     	}
     	
-    	// GESTIRE IL PROBLEMA CHE LA PRIMA LETTERA DEVE ESSERE SEMPRE MAIUSCOLA!!!!
     	
     	txtResult.clear();
     	
-    	elenco.addParola(txtParola.getText());
+    	elenco.addParola(parolaNuova);
 //    	txtResult.appendText(elenco.toString()); 
     	risultato = elenco.getElenco();
     	for(String s : risultato) {
@@ -62,12 +67,14 @@ public class FXMLController {
     		txtResult.appendText("\n");
     	}
     	
+    	txtParola.clear();
     	
     }
 
     @FXML
     void doReset(ActionEvent event) {
     	txtResult.clear();
+    	elenco.reset();
     }
 
     @FXML
